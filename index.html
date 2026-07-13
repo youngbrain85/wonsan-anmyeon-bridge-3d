@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>원산안면대교 3D — 세그먼트 검수 뷰어</title>
+<style>
+  :root { --bg:#111417; --panel:#1b2025; --line:#2c343b; --tx:#e6e9ec; --dim:#8a949d; --acc:#4da3ff; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--bg); color:var(--tx); font:13px/1.5 'Pretendard','Malgun Gothic',sans-serif; overflow:hidden; }
+  #app { display:flex; height:100vh; }
+  #panel { width:290px; min-width:290px; background:var(--panel); border-right:1px solid var(--line); padding:14px; overflow-y:auto; }
+  #view { flex:1; position:relative; }
+  canvas { display:block; }
+  h1 { font-size:14px; letter-spacing:.06em; margin-bottom:2px; }
+  .sub { color:var(--dim); font-size:11px; margin-bottom:12px; }
+  .seg { display:flex; align-items:center; gap:8px; padding:6px 8px; border:1px solid var(--line); margin-bottom:4px; cursor:pointer; user-select:none; }
+  .seg:hover { border-color:var(--acc); }
+  .seg.active { border-color:var(--acc); background:#20303f; }
+  .seg .name { flex:1; }
+  .seg .el { color:var(--dim); font-size:11px; }
+  .seg .st { font-size:10px; padding:1px 6px; border:1px solid var(--line); }
+  .seg .st.ok { color:#6fdd8b; border-color:#2f5d3a; }
+  .seg .st.new { color:#ffc76f; border-color:#6b552b; }
+  .ctl { margin-top:14px; border-top:1px solid var(--line); padding-top:12px; }
+  .ctl label { display:flex; align-items:center; gap:8px; margin-bottom:8px; color:var(--dim); }
+  .ctl input[type=range] { flex:1; accent-color:var(--acc); }
+  #hud { position:absolute; left:12px; bottom:10px; color:var(--dim); font-size:11px; pointer-events:none; white-space:pre; }
+  #err { position:absolute; top:12px; left:12px; color:#ff7b7b; font-size:12px; white-space:pre-wrap; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="panel">
+    <h1>세그먼트 검수</h1>
+    <div class="sub">원산안면대교(솔빛대교) 주탑 2기 + 상판 — LOD4/5</div>
+    <div id="list"></div>
+    <div class="ctl">
+      <label><input type="checkbox" id="wire"> 와이어프레임</label>
+      <label><input type="checkbox" id="ghost" checked> 승인분 반투명</label>
+      <label>단면 Y <input type="range" id="clipy" min="-1" max="1" step="0.005" value="1"></label>
+      <label>단면 X <input type="range" id="clipx" min="-1" max="1" step="0.005" value="1"></label>
+      <div class="sub" style="margin-top:6px">클리핑: 슬라이더를 왼쪽으로 끌면 내부 단면이 보입니다</div>
+    </div>
+  </div>
+  <div id="view"><div id="hud"></div><div id="err"></div></div>
+</div>
+<script>
+window.addEventListener('error', e => {
+  const d = document.getElementById('err');
+  if (d) d.textContent += '[error] ' + (e.message || '') + ' @' + (e.filename || '') + ':' + (e.lineno || '') + '\n';
+});
+window.addEventListener('unhandledrejection', e => {
+  const d = document.getElementById('err');
+  if (d) d.textContent += '[reject] ' + (e.reason && (e.reason.message || e.reason)) + '\n';
+});
+</script>
+<script type="module">
+import * as THREE from './lib/three.module.js';
+import { OrbitControls } from './lib/addons/controls/OrbitControls.js';
+import { GLTFLoader } from './lib/addons/loaders/GLTFLoader.js';
+
+const view = document.getElementById('view');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x111417);
+const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 5000);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.localClippingEnabled = true;
+view.appendChild(renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+
+scene.add(new THREE.HemisphereLight(0xdfe8f0, 0x30363c, 1.0));
+const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(60, 100, 40); scene.add(sun);
+const sun2 = new THREE.DirectionalLight(0x88aacc, 0.5); sun2.position.set(-50, 30, -60); scene.add(sun2);
+
+const grid = new THREE.GridHelper(60, 60, 0x2c343b, 0x20262b); scene.add(grid);
+scene.add(new THREE.AxesHelper(8));
+
+const clipY = new THREE.Plane(new THREE.Vector3(0, -1, 0), 1e6);
+const clipX = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 1e6);
+
+const state = { items: [], active: null, bbox: new THREE.Box3() };
+const loader = new GLTFLoader();
+
+const matNew = () => new THREE.MeshStandardMaterial({ color: 0x9fb6c9, metalness: .05, roughness: .75, side: THREE.DoubleSide, clippingPlanes: [clipY, clipX] });
+const matOk  = () => new THREE.MeshStandardMaterial({ color: 0x5a92c4, metalness: .05, roughness: .8, transparent: true, opacity: .35, side: THREE.DoubleSide, clippingPlanes: [clipY, clipX] });
+
+async function boot() {
+  let man;
+  try { man = await (await fetch('./manifest.json?t=' + Date.now())).json(); }
+  catch (e) { document.getElementById('err').textContent = 'manifest.json 로드 실패: ' + e; return; }
+  const list = document.getElementById('list');
+  for (const m of man.models) {
+    const row = document.createElement('div');
+    row.className = 'seg';
+    row.innerHTML = `<span class="name">${m.name}</span><span class="el">${m.el ?? ''}</span>` +
+      `<span class="st ${m.approved ? 'ok' : 'new'}">${m.approved ? '승인' : '검수중'}</span>`;
+    list.appendChild(row);
+    try {
+      const g = await loader.loadAsync('./' + m.file + '?t=' + Date.now());
+      const obj = g.scene;
+      obj.traverse(n => { if (n.isMesh) n.material = m.approved ? matOk() : matNew(); });
+      scene.add(obj);
+      const it = { meta: m, obj, row, visible: true };
+      state.items.push(it);
+      state.bbox.expandByObject(obj);
+      row.onclick = () => { it.visible = !it.visible; obj.visible = it.visible; row.style.opacity = it.visible ? 1 : .35; };
+    } catch (e) {
+      row.style.borderColor = '#a33';
+      console.error(m.file, e);
+    }
+  }
+  if (!state.bbox.isEmpty()) {
+    const c = state.bbox.getCenter(new THREE.Vector3()), s = state.bbox.getSize(new THREE.Vector3());
+    const r = Math.max(s.x, s.y, s.z);
+    camera.position.set(c.x + r * 1.2, c.y + r * .7, c.z + r * 1.2);
+    controls.target.copy(c);
+    grid.position.y = state.bbox.min.y;
+    // clip sliders map to bbox range
+    const el = (id) => document.getElementById(id);
+    el('clipy').oninput = e => { clipY.constant = state.bbox.min.y + (state.bbox.max.y - state.bbox.min.y) * ((+e.target.value + 1) / 2) + 0.001; };
+    el('clipx').oninput = e => { clipX.constant = state.bbox.min.x + (state.bbox.max.x - state.bbox.min.x) * ((+e.target.value + 1) / 2) + 0.001; };
+    clipY.constant = state.bbox.max.y + 1; clipX.constant = state.bbox.max.x + 1;
+  }
+  document.getElementById('wire').onchange = e =>
+    state.items.forEach(it => it.obj.traverse(n => { if (n.isMesh) n.material.wireframe = e.target.checked; }));
+  document.getElementById('ghost').onchange = e =>
+    state.items.forEach(it => { if (it.meta.approved) it.obj.traverse(n => { if (n.isMesh) { n.material.opacity = e.target.checked ? .35 : 1; n.material.transparent = e.target.checked; } }); });
+  document.getElementById('hud').textContent = `모델 ${state.items.length}개 | 단위: m (도면 mm/1000)`;
+}
+
+// dev hook: programmatic framing for review screenshots
+window.__viewer = {
+  camera, controls, state, clipY, clipX,
+  frame(name, dist = 1.6, az = 0.9, el = 0.5) {
+    const it = state.items.find(i => (i.meta.name || '').includes(name)) || null;
+    const box = new THREE.Box3();
+    if (it) box.expandByObject(it.obj); else box.copy(state.bbox);
+    const c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3());
+    const r = Math.max(s.x, s.y, s.z) * dist;
+    camera.position.set(c.x + r * Math.cos(el) * Math.sin(az), c.y + r * Math.sin(el), c.z + r * Math.cos(el) * Math.cos(az));
+    controls.target.copy(c);
+    controls.update();
+    return [c.toArray(), s.toArray()];
+  },
+  clip(axis, frac) {
+    const b = state.bbox;
+    if (axis === 'y') clipY.constant = b.min.y + (b.max.y - b.min.y) * frac;
+    else clipX.constant = b.min.x + (b.max.x - b.min.x) * frac;
+  },
+};
+function resize() {
+  const w = view.clientWidth, h = view.clientHeight;
+  camera.aspect = w / h; camera.updateProjectionMatrix();
+  renderer.setSize(w, h); renderer.setPixelRatio(devicePixelRatio);
+}
+window.addEventListener('resize', resize);
+resize();
+(function loop() { requestAnimationFrame(loop); controls.update(); renderer.render(scene, camera); })();
+boot();
+</script>
+</body>
+</html>
