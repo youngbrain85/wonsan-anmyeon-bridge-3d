@@ -99,7 +99,11 @@ async function boot() {
     try {
       const g = await loader.loadAsync('./' + m.file + '?t=' + Date.now());
       const obj = g.scene;
-      obj.traverse(n => { if (n.isMesh) n.material = m.approved ? matOk() : matNew(); });
+      obj.traverse(n => { if (n.isMesh) {
+        const mat = m.approved ? matOk() : matNew();
+        if (n.geometry.getAttribute('color')) { mat.vertexColors = true; mat.color.set(0xffffff); }
+        n.material = mat;
+      } });
       scene.add(obj);
       const it = { meta: m, obj, row, visible: true };
       state.items.push(it);

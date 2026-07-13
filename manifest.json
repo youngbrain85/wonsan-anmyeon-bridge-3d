@@ -195,6 +195,19 @@
    "approved": true
   },
   {
+   "name": "PY2 주탑 전체 (PY1 교축 대칭)",
+   "file": "models/PY2.glb",
+   "el": "EL +4.871 ~ +109.871 (32 세그먼트)",
+   "approved": true,
+   "meta": "전역 z+240m 베이크됨 (주경간 240.000, 017/018 미러 검증). 기초 말뚝 35m"
+  },
+  {
+   "name": "케이블 전체 (72본 + 댐퍼 근사)",
+   "file": "models/CABLES.glb",
+   "el": "4개 군 × 9 × E/W — 선형도(002) 좌표, HDPE 외경 140~200",
+   "approved": false
+  },
+  {
    "name": "상판 세그먼트 SN02",
    "file": "models/DECK_SN02.glb",
    "el": "STA 4+0221.5 ~ 4+0233.5",
@@ -339,13 +352,6 @@
    "approved": true
   },
   {
-   "name": "PY2 주탑 전체 (PY1 교축 대칭)",
-   "file": "models/PY2.glb",
-   "el": "EL +4.871 ~ +109.871 (32 세그먼트)",
-   "approved": true,
-   "meta": "전역 z+240m 베이크됨 (주경간 240.000, 017/018 미러 검증). 기초 말뚝 35m"
-  },
-  {
    "name": "상판 세그먼트 SS02",
    "file": "models/DECK_SS02.glb",
    "el": "STA 4+0158.5 ~ 4+0166.5",
@@ -424,9 +430,9 @@
    "approved": false
   },
   {
-   "name": "케이블 전체 (72본 + 댐퍼 근사)",
-   "file": "models/CABLES.glb",
-   "el": "4개 군 × 9 × E/W — 선형도(002) 좌표, HDPE 외경 140~200",
+   "name": "상판 부속 (포장·도색·연석·난간·방호울타리·배수구)",
+   "file": "models/FURNITURE.glb",
+   "el": "005 표준단면 실측 — 아스팔트T80/칼라아스콘T70/블럭3종/난간 CTC3,000/울타리 CTC3,000·2,000/배수슬롯 CTC500",
    "approved": false
   }
  ]
