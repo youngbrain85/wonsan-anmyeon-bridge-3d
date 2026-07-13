@@ -388,12 +388,6 @@
    "approved": true
   },
   {
-   "name": "상판 세그먼트 SP",
-   "file": "models/DECK_SP.glb",
-   "el": "STA 4+0085.3 ~ 4+0094.5",
-   "approved": true
-  },
-  {
    "name": "상판 세그먼트 KS_S",
    "file": "models/DECK_KS_S.glb",
    "el": "STA 4+0094.5 ~ 4+0098.5",
@@ -406,10 +400,16 @@
    "approved": true
   },
   {
+   "name": "상판 세그먼트 SP",
+   "file": "models/DECK_SP.glb",
+   "el": "STA 4+0085.3 ~ 4+0094.5",
+   "approved": false
+  },
+  {
    "name": "상판 세그먼트 NP",
    "file": "models/DECK_NP.glb",
    "el": "STA 4+0525.5 ~ 4+0534.7",
-   "approved": true
+   "approved": false
   },
   {
    "name": "상판 세그먼트 SHP",
@@ -421,6 +421,12 @@
    "name": "상판 세그먼트 NHP",
    "file": "models/DECK_NHP.glb",
    "el": "STA 4+0405.0 ~ 4+0432.0",
+   "approved": false
+  },
+  {
+   "name": "케이블 전체 (72본 + 댐퍼 근사)",
+   "file": "models/CABLES.glb",
+   "el": "4개 군 × 9 × E/W — 선형도(002) 좌표, HDPE 외경 140~200",
    "approved": false
   }
  ]
