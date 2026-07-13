@@ -339,77 +339,89 @@
    "approved": true
   },
   {
-   "name": "상판 세그먼트 SS02",
-   "file": "models/DECK_SS02.glb",
-   "el": "STA 4+0158.5 ~ 4+0166.5",
-   "approved": false
-  },
-  {
-   "name": "상판 세그먼트 SS01",
-   "file": "models/DECK_SS01.glb",
-   "el": "STA 4+0166.5 ~ 4+0188.0",
-   "approved": false
-  },
-  {
-   "name": "상판 세그먼트 SN01",
-   "file": "models/DECK_SN01.glb",
-   "el": "STA 4+0215.0 ~ 4+0221.5",
-   "approved": false
-  },
-  {
-   "name": "상판 세그먼트 KC",
-   "file": "models/DECK_KC.glb",
-   "el": "STA 4+0305.5 ~ 4+0314.5",
-   "approved": false
-  },
-  {
-   "name": "상판 세그먼트 NS01",
-   "file": "models/DECK_NS01.glb",
-   "el": "STA 4+0398.5 ~ 4+0405.0",
-   "approved": false
-  },
-  {
-   "name": "상판 세그먼트 NN01",
-   "file": "models/DECK_NN01.glb",
-   "el": "STA 4+0432.0 ~ 4+0453.5",
-   "approved": false
-  },
-  {
-   "name": "상판 세그먼트 NN02",
-   "file": "models/DECK_NN02.glb",
-   "el": "STA 4+0453.5 ~ 4+0461.5",
-   "approved": false
-  },
-  {
-   "name": "상판 세그먼트 SP",
-   "file": "models/DECK_SP.glb",
-   "el": "STA 4+0085.3 ~ 4+0094.5",
-   "approved": false
-  },
-  {
-   "name": "상판 세그먼트 KS_S",
-   "file": "models/DECK_KS_S.glb",
-   "el": "STA 4+0094.5 ~ 4+0098.5",
-   "approved": false
-  },
-  {
-   "name": "상판 세그먼트 KS_N",
-   "file": "models/DECK_KS_N.glb",
-   "el": "STA 4+0521.5 ~ 4+0525.5",
-   "approved": false
-  },
-  {
-   "name": "상판 세그먼트 NP",
-   "file": "models/DECK_NP.glb",
-   "el": "STA 4+0525.5 ~ 4+0534.7",
-   "approved": false
-  },
-  {
    "name": "PY2 주탑 전체 (PY1 교축 대칭)",
    "file": "models/PY2.glb",
    "el": "EL +4.871 ~ +109.871 (32 세그먼트)",
    "approved": true,
    "meta": "전역 z+240m 베이크됨 (주경간 240.000, 017/018 미러 검증). 기초 말뚝 35m"
+  },
+  {
+   "name": "상판 세그먼트 SS02",
+   "file": "models/DECK_SS02.glb",
+   "el": "STA 4+0158.5 ~ 4+0166.5",
+   "approved": true
+  },
+  {
+   "name": "상판 세그먼트 SS01",
+   "file": "models/DECK_SS01.glb",
+   "el": "STA 4+0166.5 ~ 4+0188.0",
+   "approved": true
+  },
+  {
+   "name": "상판 세그먼트 SN01",
+   "file": "models/DECK_SN01.glb",
+   "el": "STA 4+0215.0 ~ 4+0221.5",
+   "approved": true
+  },
+  {
+   "name": "상판 세그먼트 KC",
+   "file": "models/DECK_KC.glb",
+   "el": "STA 4+0305.5 ~ 4+0314.5",
+   "approved": true
+  },
+  {
+   "name": "상판 세그먼트 NS01",
+   "file": "models/DECK_NS01.glb",
+   "el": "STA 4+0398.5 ~ 4+0405.0",
+   "approved": true
+  },
+  {
+   "name": "상판 세그먼트 NN01",
+   "file": "models/DECK_NN01.glb",
+   "el": "STA 4+0432.0 ~ 4+0453.5",
+   "approved": true
+  },
+  {
+   "name": "상판 세그먼트 NN02",
+   "file": "models/DECK_NN02.glb",
+   "el": "STA 4+0453.5 ~ 4+0461.5",
+   "approved": true
+  },
+  {
+   "name": "상판 세그먼트 SP",
+   "file": "models/DECK_SP.glb",
+   "el": "STA 4+0085.3 ~ 4+0094.5",
+   "approved": true
+  },
+  {
+   "name": "상판 세그먼트 KS_S",
+   "file": "models/DECK_KS_S.glb",
+   "el": "STA 4+0094.5 ~ 4+0098.5",
+   "approved": true
+  },
+  {
+   "name": "상판 세그먼트 KS_N",
+   "file": "models/DECK_KS_N.glb",
+   "el": "STA 4+0521.5 ~ 4+0525.5",
+   "approved": true
+  },
+  {
+   "name": "상판 세그먼트 NP",
+   "file": "models/DECK_NP.glb",
+   "el": "STA 4+0525.5 ~ 4+0534.7",
+   "approved": true
+  },
+  {
+   "name": "상판 세그먼트 SHP",
+   "file": "models/DECK_SHP.glb",
+   "el": "STA 4+0188.0 ~ 4+0215.0",
+   "approved": false
+  },
+  {
+   "name": "상판 세그먼트 NHP",
+   "file": "models/DECK_NHP.glb",
+   "el": "STA 4+0405.0 ~ 4+0432.0",
+   "approved": false
   }
  ]
 }
