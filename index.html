@@ -83,7 +83,7 @@ const state = { items: [], active: null, bbox: new THREE.Box3() };
 const loader = new GLTFLoader();
 
 const matNew = () => new THREE.MeshStandardMaterial({ color: 0x9fb6c9, metalness: .05, roughness: .75, side: THREE.DoubleSide, clippingPlanes: [clipY, clipX] });
-const matOk  = () => new THREE.MeshStandardMaterial({ color: 0x5a92c4, metalness: .05, roughness: .8, transparent: true, opacity: .35, side: THREE.DoubleSide, clippingPlanes: [clipY, clipX] });
+const matOk  = () => new THREE.MeshStandardMaterial({ color: 0x9fb6c9, metalness: .05, roughness: .75, side: THREE.DoubleSide, clippingPlanes: [clipY, clipX] });
 
 async function boot() {
   let man;
