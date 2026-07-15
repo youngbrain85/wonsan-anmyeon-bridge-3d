@@ -183,6 +183,43 @@
    "approved": true
   },
   {
+   "name": "PY1 세그먼트 1 (받침·상부다리 전환)",
+   "file": "models/PY1_1.glb",
+   "el": "EL +32.425 ~ +36.425 (C.J. 1)",
+   "approved": true
+  },
+  {
+   "name": "케이블 72본 + 데크 정착구 (블리스터·트럼펫관·부트)",
+   "file": "models/CABLES.glb",
+   "el": "선형도 002 좌표 + 정착구 설치도 169~174/상세도 175~179 실측 — 타입 19/27/31/37/48, IHD 내장(외피 동일)",
+   "approved": true
+  },
+  {
+   "name": "상판 부속 (포장·도색·연석·난간·방호울타리·배수구)",
+   "file": "models/FURNITURE.glb",
+   "el": "005 표준단면 실측 — 아스팔트T80/칼라아스콘T70/블럭3종/난간 CTC3,000/울타리 CTC3,000·2,000/배수슬롯 CTC500",
+   "approved": true
+  },
+  {
+   "name": "교량받침 + 윈드슈 (연직 8·주두부 4·단부 4)",
+   "file": "models/BEARINGS.glb",
+   "el": "배치도 006/007 EL스택 확정 + 윈드슈 상세 164~166 실측 — 부유식(전 가동단), 본체 평면 근사",
+   "approved": true
+  },
+  {
+   "name": "PY1 주탑 정부",
+   "file": "models/PY1_top.glb",
+   "el": "EL +106.807 ~ +109.871 (정점)",
+   "approved": false
+  },
+  {
+   "name": "PY2 주탑 전체 (PY1 교축 대칭)",
+   "file": "models/PY2.glb",
+   "el": "EL +4.871 ~ +109.871 (32 세그먼트)",
+   "approved": false,
+   "meta": "017/018 좌표표 = PY1 미드스팬 미러와 완전 일치 검증. 전역 배치: PY1 중심 STA 105.000, PY2 중심 STA 345.000 (주경간 240m), 기초 파일 길이만 상이(len_pylon2)"
+  },
+  {
    "name": "상판 세그먼트 SN02",
    "file": "models/DECK_SN02.glb",
    "el": "STA 4+0221.5 ~ 4+0233.5",
@@ -403,43 +440,6 @@
    "file": "models/DECK_NHP.glb",
    "el": "STA 4+0405.0 ~ 4+0432.0",
    "approved": true
-  },
-  {
-   "name": "PY1 세그먼트 1 (받침·상부다리 전환)",
-   "file": "models/PY1_1.glb",
-   "el": "EL +32.425 ~ +36.425 (C.J. 1)",
-   "approved": true
-  },
-  {
-   "name": "케이블 72본 + 데크 정착구 (블리스터·트럼펫관·부트)",
-   "file": "models/CABLES.glb",
-   "el": "선형도 002 좌표 + 정착구 설치도 169~174/상세도 175~179 실측 — 타입 19/27/31/37/48, IHD 내장(외피 동일)",
-   "approved": true
-  },
-  {
-   "name": "상판 부속 (포장·도색·연석·난간·방호울타리·배수구)",
-   "file": "models/FURNITURE.glb",
-   "el": "005 표준단면 실측 — 아스팔트T80/칼라아스콘T70/블럭3종/난간 CTC3,000/울타리 CTC3,000·2,000/배수슬롯 CTC500",
-   "approved": true
-  },
-  {
-   "name": "교량받침 + 윈드슈 (연직 8·주두부 4·단부 4)",
-   "file": "models/BEARINGS.glb",
-   "el": "배치도 006/007 EL스택 확정 + 윈드슈 상세 164~166 실측 — 부유식(전 가동단), 본체 평면 근사",
-   "approved": true
-  },
-  {
-   "name": "PY1 주탑 정부",
-   "file": "models/PY1_top.glb",
-   "el": "EL +106.807 ~ +109.871 (정점)",
-   "approved": false
-  },
-  {
-   "name": "PY2 주탑 전체 (PY1 교축 대칭)",
-   "file": "models/PY2.glb",
-   "el": "EL +4.871 ~ +109.871 (32 세그먼트)",
-   "approved": false,
-   "meta": "017/018 좌표표 = PY1 미드스팬 미러와 완전 일치 검증. 전역 배치: PY1 중심 STA 105.000, PY2 중심 STA 345.000 (주경간 240m), 기초 파일 길이만 상이(len_pylon2)"
   }
  ]
 }
